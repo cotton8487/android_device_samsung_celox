@@ -29,6 +29,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/firmware/bcm4330B1.hcd:system/etc/firmware/bcm4330B1.hcd
 
 # Bootanimation
+TARGET_BOOTANIMATION_HALF_RES := true
 TARGET_SCREEN_WIDTH := 480
 TARGET_SCREEN_HEIGHT := 800
 
