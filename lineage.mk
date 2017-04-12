@@ -12,4 +12,4 @@ PRODUCT_NAME := lineage_celox
 PRODUCT_DEVICE := celox
 
 # Superuser
-#WITH_SU := true
+WITH_SU := true
