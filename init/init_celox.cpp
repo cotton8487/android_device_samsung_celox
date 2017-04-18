@@ -41,7 +41,7 @@ void vendor_load_properties()
     FILE *fp;
     int rc;
 
-    fp = popen("/system/bin/cat /system/variant.prop", "r");
+    fp = popen("/system/bin/strings /dev/block/mmcblk0p2 | /system/bin/grep -E ^SGH -m 1", "r");
     fgets(device_variant, sizeof(device_variant), fp);
     pclose(fp);
 
@@ -63,5 +63,5 @@ void vendor_load_properties()
         property_set("ro.telephony.default_network", "9");
     }
 
-    ERROR("Found prop file for %s setting build properties for device\n", device_variant);
+    ERROR("Found radio image for %s setting build properties for device\n", device_variant);
 }
