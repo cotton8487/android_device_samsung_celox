@@ -39,9 +39,8 @@ void vendor_load_properties()
 {
     char device_variant[92];
     FILE *fp;
-    int rc;
 
-    fp = popen("/system/bin/cat /system/variant.prop", "r");
+    fp = popen("/system/bin/strings /dev/block/mmcblk0p2 | /system/bin/grep -E ^SC-03D -m 1", "r");
     fgets(device_variant, sizeof(device_variant), fp);
     pclose(fp);
 
@@ -53,6 +52,7 @@ void vendor_load_properties()
         property_set("ro.product.device", "SGH-T989");
         property_set("telephony.lteOnGsmDevice", "0");
         property_set("ro.telephony.default_network", "3");
+        write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "1");
     } else if (strstr(device_variant, "SGH-I727")) {
         /* skyrocket */
         property_set("ro.build.fingerprint", "samsung/SGH-I727/SGH-I727:4.1.2/JZO54K/I727UCMC1:user/release-keys");
@@ -61,6 +61,7 @@ void vendor_load_properties()
         property_set("ro.product.device", "SGH-I727");
         property_set("telephony.lteOnGsmDevice", "1");
         property_set("ro.telephony.default_network", "9");
+        write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "0");
     } else if (strstr(device_variant, "SC-03D")) {
         /* celoxdcm */
         property_set("ro.build.fingerprint", "samsung/SC-03D/SC-03D:4.0.4/IMM76D/OMPP5:user/release-keys");
@@ -69,7 +70,8 @@ void vendor_load_properties()
         property_set("ro.product.device", "SC-03D");
         property_set("telephony.lteOnGsmDevice", "1");
         property_set("ro.telephony.default_network", "9");
+        write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "2");
     }
 
-    ERROR("Found prop file for %s setting build properties for device\n", device_variant);
+    ERROR("Found radio image for %s setting build properties for device\n", device_variant);
 }
