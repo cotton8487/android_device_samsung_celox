@@ -34,7 +34,7 @@ TARGET_UNIFIED_DEVICE := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x40400000
-TWRP_RECOVERY:= false
+TWRP_RECOVERY:= true
 ifeq ($(TWRP_RECOVERY),true)
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom usb_id_pin_rework=true no_console_suspend=true androidboot.selinux=permissive
 else
