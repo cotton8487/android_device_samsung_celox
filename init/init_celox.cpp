@@ -78,12 +78,12 @@ void vendor_load_properties()
         write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "0");
     } else if (strstr(device_variant, "SC-03D")) {
         /* celoxdcm */
-        property_set("ro.build.fingerprint", "samsung/SC-03D/SC-03D:4.0.4/IMM76D/OMPP5:user/release-keys");
-        property_set("ro.build.description", "SC-03D-user 4.0.4 IMM76D OMPP5 release-keys");
-        property_set("ro.product.model", "SC-03D");
-        property_set("ro.product.device", "SC-03D");
-        property_set("telephony.lteOnGsmDevice", "1");
-        property_set("ro.telephony.default_network", "9");
+        property_override("ro.build.fingerprint", "samsung/SC-03D/SC-03D:4.0.4/IMM76D/OMPP5:user/release-keys");
+        property_override("ro.build.description", "SC-03D-user 4.0.4 IMM76D OMPP5 release-keys");
+        property_override("ro.product.model", "SC-03D");
+        property_override("ro.product.device", "SC-03D");
+        property_override("telephony.lteOnGsmDevice", "1");
+        property_override("ro.telephony.default_network", "9");
         write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "2");
     }
 
