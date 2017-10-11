@@ -29,7 +29,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+#include "init_celox.h"
 #include "vendor_init.h"
 #include "property_service.h"
 #include "log.h"
@@ -37,6 +40,22 @@
 
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
+
+int write_file_int(char const* path, int value)
+{
+    int fd;
+    char buffer[20];
+    int rc = -1, bytes;
+
+    fd = open(path, O_WRONLY);
+    if (fd >= 0) {
+        bytes = snprintf(buffer, sizeof(buffer), "%d\n", value);
+        rc = write(fd, buffer, bytes);
+        close(fd);
+    }
+
+    return rc > 0 ? 0 : -1;
+}
 
 void property_override(char const prop[], char const value[])
 {
@@ -66,7 +85,7 @@ void vendor_load_properties()
         property_override("ro.product.device", "SGH-T989");
         property_override("telephony.lteOnGsmDevice", "0");
         property_override("ro.telephony.default_network", "3");
-        write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "1");
+        write_file_int("/sys/module/board_msm8x60_celox/parameters/model", SGH_T989);
     } else if (strstr(device_variant, "SGH-I727")) {
         /* skyrocket */
         property_override("ro.build.fingerprint", "samsung/SGH-I727/SGH-I727:4.1.2/JZO54K/I727UCMC1:user/release-keys");
@@ -75,7 +94,7 @@ void vendor_load_properties()
         property_override("ro.product.device", "SGH-I727");
         property_override("telephony.lteOnGsmDevice", "1");
         property_override("ro.telephony.default_network", "9");
-        write_file("/sys/devices/virtual/accelerometer/accelerometer/model", "0");
+        write_file_int("/sys/module/board_msm8x60_celox/parameters/model", SGH_I727);
     }
 
     ERROR("Found radio image for %s setting build properties for device\n", device_variant);
